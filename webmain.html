@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp 20/10</title>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET ===== */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  background: #000;
+}
+
+/* ===== VIDEO NỀN ===== */
+video.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  filter: brightness(70%) blur(2px);
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 105, 180, 0.2);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.8s ease;
+}
+#showCard:checked ~ .overlay {
+  opacity: 1;
+  z-index: 0;
+}
+
+/* Ẩn checkbox điều khiển */
+#showCard {
+  display: none;
+}
+
+/* ===== NÚT MỞ THIỆP ===== */
+label {
+  background: #ff66a3;
+  color: white;
+  padding: 14px 26px;
+  border-radius: 16px;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  width: 80%;
+  max-width: 400px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lobster", sans-serif;
+  animation: pulse 2s infinite;
+  text-align: center;
+  box-sizing: border-box;
+}
+label:hover {
+  transform: scale(1.08);
+  background: #ff80b5;
+  box-shadow: 0 0 35px 20px rgba(255, 0, 145, 0.25);
+}
+
+/* Hiệu ứng pulse */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.6); }
+  70% { box-shadow: 0 0 0 25px rgba(255, 105, 180, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+}
+
+/* ===== THIỆP ===== */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.9);
+  width: 90%;
+  max-width: 750px;
+  height: auto;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: transform 0.6s ease;
+  backdrop-filter: blur(6px);
+  box-shadow: 0px 0px 43px 13px rgba(252,96,184,0.8);
+  overflow: hidden;
+}
+#showCard:checked ~ .card {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ===== TIÊU ĐỀ ===== */
+.card h2 {
+  color: #ff4081;
+  font-family: "Lobster", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* ===== LỜI CHÚC ===== */
+.card p {
+  color: #ff0099c2;
+  font-size: 1.3rem;
+  margin-top: 20px;
+  font-family: "Lobster", sans-serif;
+  white-space: pre-wrap;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  label {
+    width: 80%;
+    height: 100px;
+    font-size: 1.6rem;
+  }
+  .card {
+    width: 90%;
+    padding: 15px;
+  }
+  .card h2 {
+    font-size: 1.8rem;
+  }
+  .card p {
+    font-size: 1.1rem;
+  }
+}
+@media (max-width: 480px) {
+  label {
+    width: 85%;
+    height: 90px;
+    font-size: 1.4rem;
+  }
+  .card {
+    width: 95%;
+  }
+  .card h2 {
+    font-size: 1.6rem;
+  }
+  .card p {
+    font-size: 1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- VIDEO NỀN -->
+<video class="bg" autoplay muted loop playsinline>
+  <source src="UxxajLWwzqY.mp4" type="video/mp4">
+</video>
+
+<!-- ÂM NHẠC -->
+<audio id="bgmusic" loop>
+  <source src="music1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- CHECKBOX -->
+<input type="checkbox" id="showCard">
+
+<!-- NÚT MỞ THIỆP -->
+<label for="showCard" onclick="playMusic()">💌 Mở thiệp 20/10</label>
+
+<!-- OVERLAY -->
+<div class="overlay"></div>
+
+<!-- THIỆP -->
+<div class="card">
+  <h2>💖 Chúc mừng 20/10 💖</h2>
+  <p>🌸 Chúc các bạn nữ luôn xinh đẹp, hạnh phúc và tràn đầy yêu thương! 🌸</p>
+  <p>Ngày Phụ nữ Việt Nam 20/10 🌹
+Chúc các bạn nữ nhận được thật nhiều quà, hoa, lời chúc và niềm vui!
+Hãy luôn tự tin, rạng rỡ và lan tỏa yêu thương đến mọi người 💐</p>
+</div>
+
+<!-- SCRIPT PHÁT NHẠC -->
+<script>
+function playMusic() {
+  const music = document.getElementById("bgmusic");
+  music.volume = 0.5;
+  music.play().catch(() => {
+    // Nếu trình duyệt chặn autoplay, phát khi người dùng click
+    document.body.addEventListener('click', () => music.play(), { once: true });
+  });
+}
+</script>
+
+</body>
+</html>
